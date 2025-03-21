@@ -31,22 +31,25 @@ public class PlayerControl : MonoBehaviour
 
         transform.position += movement;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, movement.normalized, 1f, gameLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, movement.normalized * 2, 2f, gameLayer);
 
-        Debug.DrawRay(transform.position, movement.normalized, Color.red);
+        Debug.DrawRay(transform.position, movement.normalized * 2, Color.red);
 
         if (hit.collider != null && hit.collider.gameObject != lastHitObject) 
         {
-            Debug.Log("Colisionando con: " + hit.collider.gameObject.name);
-            Debug.Log("Posición: " + hit.collider.transform.position);
-            Debug.Log("Tag: " + hit.collider.tag);
+            if(hit.collider.gameObject.tag != "Player")
+            {
+                Debug.Log("Colisionando con: " + hit.collider.gameObject.name);
+                Debug.Log("Posición: " + hit.collider.transform.position);
+                Debug.Log("Tag: " + hit.collider.tag);
 
-            lastHitObject = hit.collider.gameObject;
+                lastHitObject = hit.collider.gameObject;
+            }           
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Shape" && collision.gameObject != lastHitObject)
+        if (collision.tag == "Shape")
         {
             Debug.Log("Cambiando la forma del jugador");
             SpriteRenderer objectRenderer = collision.gameObject.GetComponent<SpriteRenderer>();
@@ -56,7 +59,7 @@ public class PlayerControl : MonoBehaviour
                 transform.localScale = collision.transform.localScale;
             }
         }
-        if(collision.tag == "Color" && collision.gameObject != lastHitObject)
+        if (collision.tag == "Color" )
         {
             Debug.Log("Cambiando el Color del jugador");
             SpriteRenderer objectRenderer = collision.gameObject.GetComponent<SpriteRenderer>();
