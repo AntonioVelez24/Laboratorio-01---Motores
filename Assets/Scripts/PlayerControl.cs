@@ -31,20 +31,17 @@ public class PlayerControl : MonoBehaviour
 
         transform.position += movement;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, movement.normalized * 2, 2f, gameLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, movement.normalized * 1.5f, 1.5f, gameLayer);
 
-        Debug.DrawRay(transform.position, movement.normalized * 2, Color.red);
+        Debug.DrawRay(transform.position, movement.normalized * 1.5f, Color.red);
 
         if (hit.collider != null && hit.collider.gameObject != lastHitObject) 
         {
-            if(hit.collider.gameObject.tag != "Player")
-            {
-                Debug.Log("Colisionando con: " + hit.collider.gameObject.name);
-                Debug.Log("Posición: " + hit.collider.transform.position);
-                Debug.Log("Tag: " + hit.collider.tag);
+            Debug.Log("Colisionando con: " + hit.collider.gameObject.name);
+            Debug.Log("Posición: " + hit.collider.transform.position);
+            Debug.Log("Tag: " + hit.collider.tag);
 
-                lastHitObject = hit.collider.gameObject;
-            }           
+            lastHitObject = hit.collider.gameObject;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
